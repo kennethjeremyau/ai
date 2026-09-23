@@ -1,45 +1,90 @@
 # \<System / Feature Name\>: Design Document
 
-| | |
-|---|---|
-| **Author** | |
-| **Status** | Draft / In Review / Approved |
-| **Last updated** | YYYY-MM-DD |
+# Project Context
 
-## 1. Purpose
+## Purpose
 
-\<One to three sentences: what this document describes, for which system or change.\>
+\<One or two paragraphs: what this document describes, for which system or change, and the technical problem or trigger that makes the change necessary.\>
 
-## 2. Terms and Acronyms
+## Overview
 
-| Term | Definition |
-|---|---|
-| | |
+\<Where the system sits today: the existing system it changes or joins, its users, the upstream and downstream systems, and the current behavior this design changes.\>
 
-## 3. Reference Documents
+## Scope
 
-| Name | Description |
-|---|---|
-| | |
+**In scope**
 
-## 4. Design
+-
 
-### 4.1 Overview
+**Out of scope**
+
+- \<Especially: what a reviewer would reasonably assume is included but isn't.\>
+
+# System Architecture
+
+## Design Overview
 
 \<One to three paragraphs, end to end: the components, who calls whom, where data lands, and the decisions that shape the rest.\>
 
-### 4.2 Architecture Diagram
+## Architecture Diagram
 
 ```mermaid
 flowchart LR
   a["Component A"] -- "protocol" --> b["Component B"]
 ```
 
-| Component | Responsibility |
-|---|---|
-| | |
+*\<Caption: what to look at in this diagram.\>*
 
-### 4.3 Fault Tolerance
+## Modules
+
+| Module | Responsibility | Owns | Depends on |
+|---|---|---|---|
+| | | | |
+
+\<Prose for any module whose internals shape the design.\>
+
+## Alternatives
+
+### \<Option name\>
+
+**Description:**
+
+**Tradeoffs:**
+
+| | Chosen design | \<Option name\> |
+|---|---|---|
+| | | |
+
+**Justification:** \<why it was not chosen\>
+
+# Operation
+
+## Availability
+
+**Target:**
+**What counts as available:**
+**Redundancy model:**
+**Planned maintenance:**
+**Dependencies that bound availability:**
+
+## Scalability
+
+**Scaling axis:**
+**Stateful components:**
+**Hard limits:**
+
+## Performance
+
+| Metric | Target | Basis |
+|---|---|---|
+| Throughput | | |
+| Latency (p95) | | |
+| Latency (p99) | | |
+
+**How the design meets these:**
+**Expected bottleneck:**
+
+## Fault Tolerance
 
 | Failure | Detection | Behavior | Recovery |
 |---|---|---|---|
@@ -49,24 +94,89 @@ flowchart LR
 **Idempotency:**
 **Retry policy:**
 **Buffering / backpressure:**
-**Redundancy and failover:**
+**State that survives a restart:**
+
+- **Failover.** \<Active/active or active/passive, trigger, expected time.\>
+
+## Disaster Recovery
+
 **RPO / RTO:**
+**Backups:** \<what, how often, where, retention\>
+**Restore procedure:**
+**What is lost:**
 
-### 4.4 Security
+## Capacity
 
-**Authentication:**
-**Authorization:**
+| Resource | Current | Projected (12 months) | Headroom | Limit |
+|---|---|---|---|---|
+| | | | | |
+
+**When capacity must be added:**
+
+# Revision
+
+## Testability
+
+**Seams for substituting dependencies:**
+**Fault injection:**
+**Deterministic time, IDs, and randomness:**
+**Test environments and data:**
+**Testable only in production, and why:**
+
+# Security
+
+## Security
+
 **Secrets and key management:**
 **Data in transit:**
 **Data at rest:**
 **Network exposure:**
 **Auditing:**
+**Compliance:**
 
 | Threat | Mitigation |
 |---|---|
 | | |
 
-### 4.5 Data Flow
+### Authentication
+
+\<How each human and machine caller proves identity.\>
+
+### Authorization
+
+| Role / scope | Permitted actions |
+|---|---|
+| | |
+
+## Privacy
+
+\<Personal data handled, or "Not applicable. This design handles no personal data."\>
+
+| Data | Purpose | Retention | Who can access |
+|---|---|---|---|
+| | | | |
+
+**Must never be logged:**
+**Applicable regulation:**
+
+# Usability
+
+\<Or "Not applicable. This design has no human-facing surface."\>
+
+## Accessibility
+
+**Standard targeted:**
+**Surfaces covered:**
+
+## Localization
+
+**Languages:**
+**Locale-sensitive formatting:** \<dates, numbers, units, time zones\>
+**Stays in English:**
+
+# Data
+
+## Data flow
 
 **Trigger:**
 **Volume:**
@@ -82,7 +192,7 @@ sequenceDiagram
 
 **Exception paths:**
 
-### 4.6 Data Model
+## Data models
 
 ```mermaid
 erDiagram
@@ -97,11 +207,13 @@ erDiagram
 **Retention and archival:**
 **Versioning / migration:**
 
-### 4.7 API Specification
+# Interfaces
 
-\<Source of truth: link to OpenAPI / AsyncAPI / proto, or "Not applicable. This design exposes no interface."\>
+## API endpoints
 
-#### \<METHOD /path\>
+\<Source of truth: link to OpenAPI / AsyncAPI / proto, or "Not applicable. This design exposes no API."\>
+
+### \<METHOD /path\>
 
 - **Purpose:**
 - **Auth:**
@@ -112,20 +224,48 @@ erDiagram
 
 **Versioning and compatibility:**
 
-### 4.8 Performance
+## CLI parameters
 
-| Metric | Target | Basis |
-|---|---|---|
-| Throughput | | |
-| Latency (p95) | | |
-| Data volume / growth | | |
+\<Or "Not applicable. This design adds no command-line interface."\>
 
-**How the design meets these:**
-**Expected bottleneck:**
-**Scaling axis:**
-**Validation method:**
+```text
+<command> [options] <arguments>
+```
 
-### 4.9 Observability
+| Option | Type | Default | Required | Environment variable | Description |
+|---|---|---|---|---|---|
+| | | | | | |
+
+| Exit code | Meaning |
+|---|---|
+| 0 | Success |
+
+**Output contract:** \<what goes to stdout, what goes to stderr\>
+**Compatibility promise:**
+
+# Deployment
+
+**Target environment and packaging:**
+**Compatibility promise:**
+**Deployment order:**
+**Migration:**
+**Rollback:**
+**New configuration and defaults:**
+
+# File structure
+
+```text
+/opt/<system>/
+├── bin/
+├── etc/
+└── var/log/
+```
+
+| Path | Purpose | Written by | Survives upgrade |
+|---|---|---|---|
+| | | | |
+
+# Observability
 
 | Metric | Unit | Indicates |
 |---|---|---|
@@ -140,7 +280,7 @@ erDiagram
 
 **Health checks / dashboards:**
 
-### 4.10 Testability
+# Testing
 
 | Property under test | Case | How it is validated |
 |---|---|---|
@@ -148,35 +288,22 @@ erDiagram
 
 **Not covered, and why:**
 
-### 4.11 Deployment and Compatibility
+# Appendix
 
-**Compatibility promise:**
-**Deployment order:**
-**Migration:**
-**Rollback:**
-**New configuration and defaults:**
+## References
 
-## 5. Alternatives Considered
+| Name | Description |
+|---|---|
+| | |
 
-### 5.1 \<Option name\>
+## Glossary
 
-**Description:**
-
-**Tradeoffs:**
-
-| | Chosen design | \<Option name\> |
-|---|---|---|
-| | | |
-
-**Justification:** \<why it was not chosen\>
-
-## 6. Open Questions
-
-| # | Question | Owner | Status |
-|---|---|---|---|
-| 1 | | | Open |
+| Term | Definition |
+|---|---|
+| | |
 
 ---
 
-*Before sending this for review, run the `unslop` skill over the whole document, tables and
-diagram labels included, and delete this line.*
+*Before sending this for review, search for `TBD` and confirm each has a question and an owner,
+run the `unslop` skill over the whole document, tables and diagram labels included, and delete
+this line.*
