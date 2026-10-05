@@ -24,3 +24,4 @@ Edit text to remove AI patterns and sound more human.
 1. **Signifying importance.** "Load-bearing", "carries the real weight", "smoking gun". Better to just get to the point.
 2. **Plain language.** "use" instead of "utilize". Avoid synonyms if a simpler, clearer word is available.
 3. **Not just X, but Y.** State the point directly instead.
+4. **"Holds" overuse.** Use "contains", "has", or "owns" instead. "Uses" works in some contexts.
